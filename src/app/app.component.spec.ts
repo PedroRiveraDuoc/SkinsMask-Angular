@@ -1,3 +1,9 @@
+/*
+app.component.spec.ts: Este archivo contiene las pruebas unitarias del componente AppComponent. 
+Las pruebas unitarias son pruebas que se escriben para verificar que un componente funcione correctamente.
+*/
+
+
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
