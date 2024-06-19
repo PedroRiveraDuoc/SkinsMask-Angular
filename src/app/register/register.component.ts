@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+loading: any;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
