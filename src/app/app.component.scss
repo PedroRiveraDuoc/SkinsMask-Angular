@@ -34,6 +34,8 @@ router-outlet {
 /* Estilo principal para asegurar que el contenido principal ocupe el espacio completo */
 main {
     flex: 1;
+    padding-bottom: 0;  // Asegúrate de que no haya padding en la parte inferior
+    margin-bottom: 0;   // Asegúrate de que no haya margen en la parte inferior
 }
 
 
@@ -137,6 +139,8 @@ footer {
     background-color: #f8f9fa;
     color: #6c757d;
     margin-top: auto;
+    margin-top: 0;      // Asegúrate de que no haya margen en la parte superior
+    padding-top: 0;     // Asegúrate de que no haya padding en la parte superior
 }
 
 /* Estilos específicos para el pie de página */

@@ -3,7 +3,7 @@ body {
     font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+
     background: url('../../assets/fondo.jpg') no-repeat center center fixed;
     background-size: cover;
     background-color: rgba(255, 0, 0, 0.5);  /* Color rojo con 50% de opacidad */
@@ -27,7 +27,7 @@ footer {
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+
 }
 
 router-outlet {

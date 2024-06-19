@@ -4,12 +4,14 @@ Es aquí donde se define qué componente se debe mostrar para cada ruta de la ap
 */
 
 import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   // otras rutas
-  { path: '', redirectTo: '/login', pathMatch: 'full' } // Redireccionar a login por defecto
+  { path: '', redirectTo: '/home', pathMatch: 'full' } // Redireccionar a login por defecto
 ];

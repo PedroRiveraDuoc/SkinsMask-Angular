@@ -2,11 +2,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding-top: 200px;
+    min-height: 130vh;
+    padding: 50px 0;
+
+    /* Ajustado para un mejor espacio */
 }
 
-.container {
+.register-container {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 10px;
@@ -38,5 +40,5 @@ h2 {
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
-    color: #fff
+    color: #fff;
 }

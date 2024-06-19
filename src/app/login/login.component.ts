@@ -28,7 +28,7 @@ export class LoginComponent {
 
       if (user) {
         alert('Login successful');
-        this.router.navigate(['/']); // Redirige al usuario a la página principal
+        this.router.navigate(['/home']); // Redirige al usuario a la página principal
       } else {
         alert('Invalid credentials');
       }
