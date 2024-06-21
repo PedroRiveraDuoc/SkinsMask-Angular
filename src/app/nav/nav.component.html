@@ -1,3 +1,4 @@
+<!-- nav.component.html -->
 <!-- Barra de navegación principal -->
 <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top">
     <div class="container">
@@ -6,7 +7,8 @@
             <img src="assets/logo.png" height="100" alt="SkinsMask" loading="lazy" style="margin-top: -2px" />
         </a>
         <!-- Botón para colapsar la barra de navegación en pantallas pequeñas -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Elementos de la barra de navegación -->
@@ -30,29 +32,22 @@
         <!-- Elementos adicionales en la barra de navegación -->
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav nav-underline">
-                <!-- Menú desplegable para el administrador -->
-                <li class="nav-item dropdown" style="padding-top: 8px;">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Admin
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
-                        <li><a class="dropdown-item" href="/admin/users">Admin Usuarios</a></li>
-                        <li><a class="dropdown-item" href="/admin/orders">Admin Órdenes</a></li>
-                    </ul>
-                </li>
                 <!-- Enlace para iniciar sesión -->
-                <li class="nav-item" id="navLogin" style="padding-top: 8px;">
+                <li *ngIf="!isAuthenticated" class="nav-item" id="navLogin" style="padding-top: 8px;">
                     <a class="nav-link" href="/login">Ingresar</a>
                 </li>
                 <!-- Botón para registrarse -->
-                <li class="nav-item" id="navRegister" style="padding-top: 8px;">
+                <li *ngIf="!isAuthenticated" class="nav-item" id="navRegister" style="padding-top: 8px;">
                     <a class="btn btn-primary me-3" href="/register">Registrate</a>
                 </li>
                 <!-- Enlace al carrito de compras -->
                 <li class="nav-item">
                     <a class="nav-link" href="/cart">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart-dollar" width="30" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc002d" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-tabler icon-tabler-shopping-cart-dollar" width="30" height="40"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="#bc002d" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
                             <path d="M13 17h-7v-14h-2" />
                             <path d="M6 5l14 1l-.575 4.022m-4.925 2.978h-8.5" />
@@ -62,13 +57,14 @@
                     </a>
                 </li>
                 <!-- Menú desplegable para el usuario logueado -->
-                <li class="nav-item dropdown d-none" id="navUser" style="padding-top: 8px;">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span id="navUsername"></span>
+                <li *ngIf="isAuthenticated" class="nav-item dropdown" id="navUser" style="padding-top: 8px;">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ username }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/profile-edit">Modificar Perfil</a></li>
-                        <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar Sesión</a></li>
+                        <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar Sesión</a></li>
                     </ul>
                 </li>
             </ul>
