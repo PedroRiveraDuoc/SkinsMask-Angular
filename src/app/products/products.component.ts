@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CartService } from '../services/cart.service';
 
 interface Product {
   id: number;
@@ -13,11 +13,11 @@ interface Product {
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent {
   products: Product[] = [
     { id: 1, name: 'Black Gold Calligraphy', description: 'Descripción breve del producto.', price: 149990, imageUrl: 'assets/post/black-gold-calligraphy.jpg' },
     { id: 2, name: 'Black Half Mask', description: 'Descripción breve del producto.', price: 59990, imageUrl: 'assets/post/black-half-mask.png' },
@@ -26,14 +26,9 @@ export class ProductsComponent implements OnInit {
     { id: 5, name: 'Red Hannya', description: 'Descripción breve del producto.', price: 139990, imageUrl: 'assets/post/red-hannya.png' }
   ];
 
-  constructor() { }
-
-  ngOnInit(): void {
-    console.log('ProductsComponent initialized');
-  }
+  constructor(private cartService: CartService) {}
 
   addToCart(product: Product): void {
-    console.log(`Adding product to cart: ${product.name}`);
-    // Aquí iría la lógica para agregar el producto al carrito
+    this.cartService.addToCart(product);
   }
 }

@@ -29,13 +29,11 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription?.unsubscribe();
   }
 
-  logout():
-    void {
+  logout(): void {
     this.authService.logout();
+    console.log('User logged out, state updated.');
   }
 }

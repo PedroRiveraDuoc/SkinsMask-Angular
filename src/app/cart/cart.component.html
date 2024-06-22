@@ -1,0 +1,24 @@
+<div class="container cart-container">
+    <h2 class="text-center">Carrito de Compras</h2>
+    <div class="cart-item card mb-3" *ngFor="let item of cartItems">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img [src]="item.product.imageUrl" class="img-fluid rounded-start" alt="{{ item.product.name }}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.product.name }}</h5>
+                    <p class="card-text">{{ item.product.description }}</p>
+                    <p class="card-text"><strong>CLP {{ item.product.price | number : '1.0-0' }}</strong></p>
+                    <p class="card-text">Cantidad: {{ item.quantity }}</p>
+                    <button class="btn btn-danger" (click)="removeFromCart(item.product)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cart-summary">
+        <h4>Total: CLP {{ getTotal() | number : '1.0-0' }}</h4>
+        <button class="btn btn-warning" (click)="clearCart()">Vaciar Carrito</button>
+        <button class="btn btn-success" (click)="checkout()">Comprar</button>
+    </div>
+</div>
