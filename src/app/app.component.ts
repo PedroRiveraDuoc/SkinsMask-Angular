@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavComponent } from "./nav/nav.component";
 import { FooterComponent } from './footer/footer.component';
+import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
+
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,8 @@ import { FooterComponent } from './footer/footer.component';
   imports: [
     RouterOutlet,
     NavComponent,
-    FooterComponent
+    FooterComponent,
+    AdminOrdersComponent
   ]
 })
 export class AppComponent {

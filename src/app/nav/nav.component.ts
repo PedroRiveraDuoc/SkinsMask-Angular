@@ -18,13 +18,9 @@ export class NavComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.subscription = this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe(user => {
       this.isAuthenticated = !!user;
-      this.username = user !== null ? user.firstName : null;
-      console.log('User state updated:', {
-        isAuthenticated: this.isAuthenticated,
-        username: this.username
-      });
+      this.username = user ? user.firstName : null;
     });
   }
 
@@ -34,6 +30,5 @@ export class NavComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.authService.logout();
-    console.log('User logged out, state updated.');
   }
 }

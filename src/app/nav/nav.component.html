@@ -56,6 +56,16 @@
                         </svg>
                     </a>
                 </li>
+                <li *ngIf="isAuthenticated" class="nav-item dropdown" id="navAdmin" style="padding-top: 8px;">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarAdminDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarAdminDropdown">
+                        <li><a class="dropdown-item" href="/admin/orders">Ver Órdenes</a></li>
+                        <li><a class="dropdown-item" href="/admin/users">Admin Usuarios</a></li>
+                    </ul>
+                </li>
                 <!-- Menú desplegable para el usuario logueado -->
                 <li *ngIf="isAuthenticated" class="nav-item dropdown" id="navUser" style="padding-top: 8px;">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

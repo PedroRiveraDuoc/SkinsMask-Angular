@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -8,22 +9,19 @@ export class AuthService {
     private currentUserSubject = new BehaviorSubject<any>(null);
     currentUser$ = this.currentUserSubject.asObservable();
 
-    constructor() {
-        if (typeof localStorage !== 'undefined') {
-            const storedUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-            this.currentUserSubject.next(storedUser);
+    constructor(private storageService: StorageService) {
+        if (this.storageService.isLocalStorageAvailable()) {
+            const user = JSON.parse(this.storageService.getItem('currentUser') || 'null');
+            this.currentUserSubject.next(user);
         }
     }
 
     login(email: string, password: string): boolean {
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const users = JSON.parse(this.storageService.getItem('users') || '[]');
         const user = users.find((u: any) => u.email === email && u.password === password);
         if (user) {
             this.currentUserSubject.next(user);
-            if (typeof localStorage !== 'undefined') {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-            }
-            console.log('User logged in:', user);
+            this.storageService.setItem('currentUser', JSON.stringify(user));
             return true;
         }
         return false;
@@ -31,17 +29,14 @@ export class AuthService {
 
     logout(): void {
         this.currentUserSubject.next(null);
-        if (typeof localStorage !== 'undefined') {
-            localStorage.removeItem('currentUser');
-        }
-        console.log('User logged out');
+        this.storageService.removeItem('currentUser');
     }
 
     register(newUser: any): void {
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const users = JSON.parse(this.storageService.getItem('users') || '[]');
+        newUser.id = users.length + 1; // Asigna un ID único al usuario
         users.push(newUser);
-        localStorage.setItem('users', JSON.stringify(users));
-        console.log('User registered:', newUser);
+        this.storageService.setItem('users', JSON.stringify(users));
     }
 
     getCurrentUser(): any {

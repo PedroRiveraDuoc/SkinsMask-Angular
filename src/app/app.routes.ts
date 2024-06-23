@@ -1,21 +1,22 @@
-/*
-app.routes.ts: Este archivo contiene las rutas de la aplicación. 
-Es aquí donde se define qué componente se debe mostrar para cada ruta de la aplicación.
-*/
-
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginComponent } from './login/login.component';
 import { ProductsComponent } from './products/products.component';
 import { CartComponent } from './cart/cart.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
+import { AdminUsersComponent } from './admin-users/admin-users.component';
 
 export const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'cart', component: CartComponent },
-  // otras rutas
-  { path: '', redirectTo: '/home', pathMatch: 'full' } // Redireccionar a login por defecto
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'admin/orders', component: AdminOrdersComponent },
+  { path: 'admin/users', component: AdminUsersComponent }
+  
 ];
+
+export default routes;

@@ -1,0 +1,27 @@
+<div class="admin-container">
+    <h1>Órdenes de Compra</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID Usuario</th>
+                <th>Nombre Usuario</th>
+                <th>Email</th>
+                <th>Productos</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders">
+                <td>{{ order.user?.id }}</td>
+                <td>{{ order.user?.firstName }} {{ order.user?.lastName }}</td>
+                <td>{{ order.user?.email }}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let item of order.items">{{ item.product.name }} (x{{ item.quantity }})</li>
+                    </ul>
+                </td>
+                <td>CLP {{ order.totalAmount }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
