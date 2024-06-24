@@ -1,18 +1,23 @@
-.admin-container {
-    max-width: 80%;
-    margin-top: 5vh;
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 105vh;
+}
+
+.container {
     background-color: #fff;
-    padding: 60px;
-    padding-bottom: 300px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 80vh;
 }
 
-.table {
-    margin-top: 20px;
-    width: 100%;
+.table thead {
+    background-color: #343a40;
+    color: #fff;
 }
 
-body {
-    background-color: #f8f9fa;
+.table tbody tr:hover {
+    background-color: #f1f1f1;
 }
