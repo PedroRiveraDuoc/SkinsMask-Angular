@@ -1,0 +1,32 @@
+<div class="container cart-container" style="background-color: rgb(237, 237, 237)">
+    <div class="d-flex justify-content-center align-items-center mb-5">
+        <img src="assets/carrito-compras.png" class="img-fluid" style="width: 700px; height: auto;" alt="Carrito de compras">
+    </div>
+    <div class="table-responsive">
+    <div *ngFor="let item of cartItems" class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4 img-container">
+                <img [src]="item.product.imageUrl" class="img-fluid rounded-start" alt="{{ item.product.name }}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title"><strong>{{ item.product.name }}</strong></h5>
+                        <p class="card-text">{{ item.product.description }}</p>
+                        <p class="card-text"><strong>CLP {{ item.product.price | number : '1.0-0' }}</strong></p>
+                        <p class="card-text">Cantidad: {{ item.quantity }}</p>
+                    </div>
+                    <button class="btn btn-danger ms-3" (click)="removeFromCart(item.product)">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cart-summary text-center mt-4">
+        <br>
+        <h4>Total: $ {{ getTotal() | number : '1.0-0' }}</h4>
+        <br>
+        <button class="btn btn-warning mx-2" (click)="clearCart()">Vaciar Carrito</button>
+        <button class="btn btn-success mx-2" (click)="checkout()">Comprar</button>
+        <br>
+    </div>
+</div>

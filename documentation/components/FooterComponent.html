@@ -1,0 +1,372 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>skins-mask documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">skins-mask documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  FooterComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/footer/footer.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-footer</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./footer.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./footer.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+
+@Component({
+  selector: &#x27;app-footer&#x27;,
+  standalone: true,
+  imports: [],
+  templateUrl: &#x27;./footer.component.html&#x27;,
+  styleUrl: &#x27;./footer.component.scss&#x27;
+})
+export class FooterComponent {
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- Pie de página --&gt;
+&lt;footer class&#x3D;&quot;mt-auto py-5 footer&quot; style&#x3D;&quot;background-color: rgb(241, 241, 241)&quot;&gt;
+    &lt;div class&#x3D;&quot;container&quot;&gt;
+        &lt;div class&#x3D;&quot;row&quot;&gt;
+            &lt;!-- Sección de soporte --&gt;
+            &lt;div class&#x3D;&quot;col-6 col-md-2 mb-3&quot;&gt;
+                &lt;h5&gt;&lt;strong&gt;Soporte&lt;/strong&gt;&lt;/h5&gt;
+                &lt;ul class&#x3D;&quot;nav flex-column&quot;&gt;
+                    &lt;li class&#x3D;&quot;nav-item mb-2&quot;&gt;&lt;a href&#x3D;&quot;/about&quot; class&#x3D;&quot;nav-link p-0 text-muted&quot;&gt;Sobre Nosotros&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class&#x3D;&quot;nav-item mb-2&quot;&gt;&lt;a href&#x3D;&quot;/contact&quot; class&#x3D;&quot;nav-link p-0 text-muted&quot;&gt;Contacto&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class&#x3D;&quot;nav-item mb-2&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;nav-link p-0 text-muted&quot;&gt;Política de Devoluciones&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class&#x3D;&quot;nav-item mb-2&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;nav-link p-0 text-muted&quot;&gt;Términos y Condiciones&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class&#x3D;&quot;nav-item mb-2&quot;&gt;&lt;a href&#x3D;&quot;#&quot; class&#x3D;&quot;nav-link p-0 text-muted&quot;&gt;FAQs&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;!-- Sección de suscripción al boletín --&gt;
+            &lt;div class&#x3D;&quot;col-md-5 offset-md-5 mb-3&quot;&gt;
+                &lt;form&gt;
+                    &lt;h5&gt;&lt;strong&gt;Suscríbete a nuestro boletín&lt;/strong&gt;&lt;/h5&gt;&lt;br&gt;
+                    &lt;p&gt;Recibe las últimas noticias y ofertas especiales directamente en tu bandeja de entrada.&lt;/p&gt;&lt;br&gt;
+                    &lt;div class&#x3D;&quot;d-flex flex-column flex-sm-row w-100 gap-2&quot;&gt;
+                        &lt;label for&#x3D;&quot;newsletter1&quot; class&#x3D;&quot;visually-hidden&quot;&gt;Correo electrónico&lt;/label&gt;
+                        &lt;input id&#x3D;&quot;newsletter1&quot; type&#x3D;&quot;text&quot; class&#x3D;&quot;form-control&quot; placeholder&#x3D;&quot;Correo electrónico&quot;&gt;
+                        &lt;button class&#x3D;&quot;btn btn-primary&quot; type&#x3D;&quot;button&quot;&gt;Suscribirse&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/form&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- Sección de derechos reservados y enlaces a redes sociales --&gt;
+        &lt;div class&#x3D;&quot;d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top&quot;&gt;
+            &lt;p&gt;© 2024 SkinsMask, Inc. Todos los derechos reservados.&lt;/p&gt;
+            &lt;ul class&#x3D;&quot;list-unstyled d-flex&quot;&gt;
+                &lt;li class&#x3D;&quot;ms-3&quot;&gt;&lt;a class&#x3D;&quot;link-dark&quot; href&#x3D;&quot;#&quot;&gt;
+                    &lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;currentColor&quot; class&#x3D;&quot;bi bi-twitter&quot; viewBox&#x3D;&quot;0 0 16 16&quot;&gt;
+                        &lt;path d&#x3D;&quot;M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.009-.423A6.67 6.67 0 0 0 16 3.542a6.51 6.51 0 0 1-1.885.518 3.301 3.301 0 0 0 1.443-1.817 6.533 6.533 0 0 1-2.084.794 3.286 3.286 0 0 0-5.593 2.995A9.325 9.325 0 0 1 1.114 2.1 3.286 3.286 0 0 0 2.13 7.722a3.28 3.28 0 0 1-1.487-.41v.041a3.283 3.283 0 0 0 2.633 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.058 3.284 3.284 0 0 0 3.066 2.277A6.588 6.588 0 0 1 .78 13.58a9.313 9.313 0 0 0 5.045 1.475&quot; /&gt;
+                    &lt;/svg&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li class&#x3D;&quot;ms-3&quot;&gt;&lt;a class&#x3D;&quot;link-dark&quot; href&#x3D;&quot;#&quot;&gt;
+                    &lt;svg xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot; width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;currentColor&quot; class&#x3D;&quot;bi bi-instagram&quot; viewBox&#x3D;&quot;0 0 16 16&quot;&gt;
+                        &lt;path d&#x3D;&quot;M8 0C5.748 0 5.485.007 4.676.053c-.804.045-1.35.187-1.842.39a3.729 3.729 0 0 0-1.35.876 3.729 3.729 0 0 0-.876 1.35c-.203.492-.345 1.038-.39 1.842C.007 5.485 0 5.748 0 8s.007 2.515.053 3.324c.045.804.187 1.35.39 1.842.21.54.503 1.032.876 1.35a3.729 3.729 0 0 0 1.35.876c.492.203 1.038.345 1.842.39.809.046 1.072.053 3.324.053s2.515-.007 3.324-.053c.804-.045 1.35-.187 1.842-.39a3.729 3.729 0 0 0 1.35-.876 3.729 3.729 0 0 0 .876-1.35c.203-.492.345-1.038.39-1.842.046-.809.053-1.072.053-3.324s-.007-2.515-.053-3.324c-.045-.804-.187-1.35-.39-1.842a3.729 3.729 0 0 0-.876-1.35 3.729 3.729 0 0 0-1.35-.876c-.492-.203-1.038-.345-1.842-.39C10.515.007 10.252 0 8 0zm0 1.175c2.487 0 2.791.008 3.77.054.725.04 1.118.173 1.378.288.348.145.597.32.861.584.264.264.439.513.584.861.115.26.248.653.288 1.378.046.979.054 1.283.054 3.77s-.008 2.791-.054 3.77c-.04.725-.173 1.118-.288 1.378a2.53 2.53 0 0 1-.584.861 2.53 2.53 0 0 1-.861.584c-.26.115-.653.248-1.378.288-.979.046-1.283.054-3.77.054s-2.791-.008-3.77-.054c-.725-.04-1.118-.173-1.378-.288a2.53 2.53 0 0 1-.861-.584 2.53 2.53 0 0 1-.584-.861c-.115-.26-.248-.653-.288-1.378-.046-.979-.054-1.283-.054-3.77s.008-2.791.054-3.77c.04-.725.173-1.118.288-1.378.145-.348.32-.597.584-.861.264-.264.513-.439.861-.584.26-.115.653-.248 1.378-.288.979-.046 1.283-.054 3.77-.054zm0 2.85a5.15 5.15 0 1 0 0 10.3 5.15 5.15 0 0 0 0-10.3zm0 8.478a3.328 3.328 0 1 1 0-6.656 3.328 3.328 0 0 1 0 6.656zm5.406-9.845a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z&quot; /&gt;
+                    &lt;/svg&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/footer&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- Pie de página --><footer class="mt-auto py-5 footer" style="background-color: rgb(241, 241, 241)">    <div class="container">        <div class="row">            <!-- Sección de soporte -->            <div class="col-6 col-md-2 mb-3">                <h5><strong>Soporte</strong></h5>                <ul class="nav flex-column">                    <li class="nav-item mb-2"><a href="/about" class="nav-link p-0 text-muted">Sobre Nosotros</a></li>                    <li class="nav-item mb-2"><a href="/contact" class="nav-link p-0 text-muted">Contacto</a></li>                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Política de Devoluciones</a></li>                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Términos y Condiciones</a></li>                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>                </ul>            </div>            <!-- Sección de suscripción al boletín -->            <div class="col-md-5 offset-md-5 mb-3">                <form>                    <h5><strong>Suscríbete a nuestro boletín</strong></h5><br>                    <p>Recibe las últimas noticias y ofertas especiales directamente en tu bandeja de entrada.</p><br>                    <div class="d-flex flex-column flex-sm-row w-100 gap-2">                        <label for="newsletter1" class="visually-hidden">Correo electrónico</label>                        <input id="newsletter1" type="text" class="form-control" placeholder="Correo electrónico">                        <button class="btn btn-primary" type="button">Suscribirse</button>                    </div>                </form>            </div>        </div>        <!-- Sección de derechos reservados y enlaces a redes sociales -->        <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">            <p>© 2024 SkinsMask, Inc. Todos los derechos reservados.</p>            <ul class="list-unstyled d-flex">                <li class="ms-3"><a class="link-dark" href="#">                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.009-.423A6.67 6.67 0 0 0 16 3.542a6.51 6.51 0 0 1-1.885.518 3.301 3.301 0 0 0 1.443-1.817 6.533 6.533 0 0 1-2.084.794 3.286 3.286 0 0 0-5.593 2.995A9.325 9.325 0 0 1 1.114 2.1 3.286 3.286 0 0 0 2.13 7.722a3.28 3.28 0 0 1-1.487-.41v.041a3.283 3.283 0 0 0 2.633 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.058 3.284 3.284 0 0 0 3.066 2.277A6.588 6.588 0 0 1 .78 13.58a9.313 9.313 0 0 0 5.045 1.475" />                    </svg></a></li>                <li class="ms-3"><a class="link-dark" href="#">                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">                        <path d="M8 0C5.748 0 5.485.007 4.676.053c-.804.045-1.35.187-1.842.39a3.729 3.729 0 0 0-1.35.876 3.729 3.729 0 0 0-.876 1.35c-.203.492-.345 1.038-.39 1.842C.007 5.485 0 5.748 0 8s.007 2.515.053 3.324c.045.804.187 1.35.39 1.842.21.54.503 1.032.876 1.35a3.729 3.729 0 0 0 1.35.876c.492.203 1.038.345 1.842.39.809.046 1.072.053 3.324.053s2.515-.007 3.324-.053c.804-.045 1.35-.187 1.842-.39a3.729 3.729 0 0 0 1.35-.876 3.729 3.729 0 0 0 .876-1.35c.203-.492.345-1.038.39-1.842.046-.809.053-1.072.053-3.324s-.007-2.515-.053-3.324c-.045-.804-.187-1.35-.39-1.842a3.729 3.729 0 0 0-.876-1.35 3.729 3.729 0 0 0-1.35-.876c-.492-.203-1.038-.345-1.842-.39C10.515.007 10.252 0 8 0zm0 1.175c2.487 0 2.791.008 3.77.054.725.04 1.118.173 1.378.288.348.145.597.32.861.584.264.264.439.513.584.861.115.26.248.653.288 1.378.046.979.054 1.283.054 3.77s-.008 2.791-.054 3.77c-.04.725-.173 1.118-.288 1.378a2.53 2.53 0 0 1-.584.861 2.53 2.53 0 0 1-.861.584c-.26.115-.653.248-1.378.288-.979.046-1.283.054-3.77.054s-2.791-.008-3.77-.054c-.725-.04-1.118-.173-1.378-.288a2.53 2.53 0 0 1-.861-.584 2.53 2.53 0 0 1-.584-.861c-.115-.26-.248-.653-.288-1.378-.046-.979-.054-1.283-.054-3.77s.008-2.791.054-3.77c.04-.725.173-1.118.288-1.378.145-.348.32-.597.584-.861.264-.264.513-.439.861-.584.26-.115.653-.248 1.378-.288.979-.046 1.283-.054 3.77-.054zm0 2.85a5.15 5.15 0 1 0 0 10.3 5.15 5.15 0 0 0 0-10.3zm0 8.478a3.328 3.328 0 1 1 0-6.656 3.328 3.328 0 0 1 0 6.656zm5.406-9.845a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z" />                    </svg></a></li>            </ul>        </div>    </div></footer></div>'
+    var COMPONENTS = [{'name': 'AboutComponent', 'selector': 'app-about'},{'name': 'AdminOrdersComponent', 'selector': 'app-admin-orders'},{'name': 'AdminUsersComponent', 'selector': 'app-admin-users'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CartComponent', 'selector': 'app-cart'},{'name': 'ContactComponent', 'selector': 'app-contact'},{'name': 'EditProfileComponent', 'selector': 'app-edit-profile'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'ForgotPasswordComponent', 'selector': 'app-forgot-password'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'NavComponent', 'selector': 'app-nav'},{'name': 'ProductsComponent', 'selector': 'app-products'},{'name': 'RegisterComponent', 'selector': 'app-register'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'FooterComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'FooterComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

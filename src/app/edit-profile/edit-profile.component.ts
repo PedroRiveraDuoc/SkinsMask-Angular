@@ -5,7 +5,11 @@ import { StorageService } from '../services/storage.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
+/**
+ * EditProfileComponent
+ * 
+ * Este componente maneja la funcionalidad de edición de perfil del usuario.
+ */
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
@@ -16,7 +20,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class EditProfileComponent implements OnInit {
   profileForm: FormGroup;
   currentUser: any;
-
+  /**
+   * Constructor del EditProfileComponent.
+   * @param formBuilder Servicio para construir formularios.
+   * @param authService Servicio de autenticación.
+   * @param router Servicio de navegación.
+   */
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -31,7 +40,9 @@ export class EditProfileComponent implements OnInit {
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
   }
-
+  /**
+   * Método de inicialización del componente. Se ejecuta al cargar el componente.
+   */
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     if (this.currentUser) {
@@ -43,7 +54,9 @@ export class EditProfileComponent implements OnInit {
     return frm.controls['password'].value === frm.controls['confirmPassword'].value
       ? null : { 'mismatch': true };
   }
-
+  /**
+   * Método para manejar el envío del formulario.
+   */
   onSubmit(): void {
     if (this.profileForm.valid) {
       const updatedUser = this.profileForm.value;

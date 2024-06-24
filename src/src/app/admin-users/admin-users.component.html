@@ -1,0 +1,27 @@
+<div class="admin-container container mt-5 p-5 rounded shadow-sm" style="background-color: rgb(237, 237, 237)">
+    <div class="d-flex justify-content-center align-items-center mb-5">
+        <img src="assets/administracion_usuarios.png" class="img-fluid" style="width: 700px; height: auto;" alt="Administración de Usuarios">
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of users">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstName }} {{ user.lastName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

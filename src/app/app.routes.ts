@@ -10,7 +10,12 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
-
+/**
+ * Configuración de las rutas de la aplicación.
+ * 
+ * Este archivo define las rutas para los diferentes componentes de la aplicación.
+ * Cada ruta mapea una URL específica a un componente.
+ */
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
