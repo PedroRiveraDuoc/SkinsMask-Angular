@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'admin/orders', component: AdminOrdersComponent },
-  { path: 'admin/users', component: AdminUsersComponent }
+  { path: 'admin/users', component: AdminUsersComponent },
+  { path: 'edit-profile', component: EditProfileComponent }
   
 ];
 

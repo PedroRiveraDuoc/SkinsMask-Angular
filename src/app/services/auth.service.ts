@@ -10,10 +10,8 @@ export class AuthService {
     currentUser$ = this.currentUserSubject.asObservable();
 
     constructor(private storageService: StorageService) {
-        if (this.storageService.isLocalStorageAvailable()) {
-            const user = JSON.parse(this.storageService.getItem('currentUser') || 'null');
-            this.currentUserSubject.next(user);
-        }
+        const user = JSON.parse(this.storageService.getItem('currentUser') || 'null');
+        this.currentUserSubject.next(user);
     }
 
     login(email: string, password: string): boolean {
@@ -41,5 +39,16 @@ export class AuthService {
 
     getCurrentUser(): any {
         return this.currentUserSubject.value;
+    }
+
+    updateUser(updatedUser: any): void {
+        const users = JSON.parse(this.storageService.getItem('users') || '[]');
+        const userIndex = users.findIndex((u: any) => u.id === updatedUser.id);
+        if (userIndex !== -1) {
+            users[userIndex] = updatedUser;
+            this.storageService.setItem('users', JSON.stringify(users));
+            this.storageService.setItem('currentUser', JSON.stringify(updatedUser));
+            this.currentUserSubject.next(updatedUser);
+        }
     }
 }
