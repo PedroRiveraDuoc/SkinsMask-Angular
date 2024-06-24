@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -49,6 +49,16 @@ export class AuthService {
             this.storageService.setItem('users', JSON.stringify(users));
             this.storageService.setItem('currentUser', JSON.stringify(updatedUser));
             this.currentUserSubject.next(updatedUser);
+        }
+    }
+
+    resetPassword(email: string): Observable<boolean> {
+        const users = JSON.parse(this.storageService.getItem('users') || '[]');
+        const user = users.find((u: any) => u.email === email);
+        if (user) {
+            return of(true); // Simula el envío exitoso del correo electrónico
+        } else {
+            return of(false); // Simula un error en el envío del correo electrónico
         }
     }
 }
