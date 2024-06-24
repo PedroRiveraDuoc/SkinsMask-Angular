@@ -1,17 +1,31 @@
-.edit-profile-container {
-    max-width: 600px;
-    margin: 5vh auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120vh;
+}
+
+.container {
+    margin-top: 100px;
+    
+}
+
+.card-header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
 
-button {
-    display: block;
-    width: 100%;
+.btn-primary {
+    background-color: #ff2847;
+    border-color: #ff2847;
+}
+
+.btn-primary:hover {
+    background-color: #ff5f72;
+    border-color: #ff5f72;
 }
