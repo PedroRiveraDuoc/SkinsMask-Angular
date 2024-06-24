@@ -8,6 +8,8 @@ import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +21,10 @@ export const routes: Routes = [
   { path: 'admin/orders', component: AdminOrdersComponent },
   { path: 'admin/users', component: AdminUsersComponent },
   { path: 'edit-profile', component: EditProfileComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent }
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'contact', component: ContactComponent },
+
   
 ];
 

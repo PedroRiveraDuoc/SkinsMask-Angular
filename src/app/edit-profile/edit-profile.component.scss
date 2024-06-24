@@ -2,11 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 120vh;
+    min-height: 110vh;
 }
 
 .container {
-    margin-top: 100px;
+    margin-top: 4rem;
     
 }
 
@@ -28,4 +28,15 @@
 .btn-primary:hover {
     background-color: #ff5f72;
     border-color: #ff5f72;
+}
+
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+    text-align: center;
 }

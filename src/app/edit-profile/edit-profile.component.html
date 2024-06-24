@@ -2,10 +2,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="d-flex justify-content-center align-items-center mb-5">
-                    <img src="assets/modificar-perfil.png" class="img-fluid" style="width: 700px; height: auto;" alt="Modificar Perfil">
-                </div>
                 <div class="card-body">
+                    <div class="d-flex justify-content-center align-items-center mb-5">
+                        <img src="assets/modificar-perfil.png" class="img-fluid" style="width: 700px; height: auto;" alt="Modificacion de perfil">
+                    </div>
                     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
                         <div class="form-group mb-3">
                             <label for="firstName">Nombre</label>
@@ -25,12 +25,10 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="confirmPassword">Confirmar Contraseña</label>
-                            <input type="password" id="confirmPassword" formControlName="confirmPassword"
-                                class="form-control">
+                            <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
                         </div>
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Guardar
-                                Cambios</button>
+                            <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Guardar Cambios</button>
                         </div>
                     </form>
                 </div>

@@ -30,5 +30,6 @@ export class ProductsComponent {
 
   addToCart(product: Product): void {
     this.cartService.addToCart(product);
+    alert('Producto agregado al carrito');
   }
 }
