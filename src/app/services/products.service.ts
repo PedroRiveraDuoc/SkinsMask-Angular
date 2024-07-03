@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { response } from 'express';
 
 /**
  * ProductsService
@@ -11,42 +12,39 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductsService {
-  private jsonUrl = 'assets/products.json'; // URL local del archivo JSON
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 39ad5402-8865-43a9-b5ac-f151db8a3394'
+    })
+  };
+
+  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/skinsmask-baa17.appspot.com/o/products.json?alt=media&token=39ad5402-8865-43a9-b5ac-f151db8a3394'; // URL archivo JSON Firebase
+
+
+  private lista: any;
 
   constructor(private http: HttpClient) {
     console.log('ProductsService constructor called');
   }
 
-  /**
-   * Obtiene los datos de productos desde el archivo JSON.
-   * 
-   * @returns Observable<any> - Un observable con los datos del archivo JSON.
-   */
+
   getProducts(): Observable<any> {
     console.log('getProducts method called');
     return this.http.get(this.jsonUrl);
   }
 
-  /**
-   * Sobrescribe los datos del archivo JSON con nuevos datos.
-   * 
-   * @param listaProductos any - Los datos que se van a escribir en el archivo JSON.
-   */
-  saveProducts(listaProductos: any): void {
-    console.log('saveProducts method called with data:', listaProductos);
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-    this.http.post(this.jsonUrl, listaProductos, httpOptions).subscribe(
+  MetodoProductos(listaProductos: any) {
+    console.log(listaProductos);
+    this.http.post(this.jsonUrl, listaProductos, this.httpOptions).subscribe(
       response => {
-        console.log('Archivo JSON sobrescrito con éxito', response);
+        console.log('Archivo JSON sobrescrito con exito', response);
       },
       error => {
-        console.error('Error al sobrescribir el archivo JSON', error);
-      }
-    );
+        console.log('Error al sobrescribir archivo JSON', error);
+      })
+      
   }
+
 }
