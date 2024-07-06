@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../services/cart.service';
 import { ProductsService } from '../services/products.service';
@@ -6,12 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Storage } from '@angular/fire/storage';
 
-/**
- * ProductsComponent
- * 
- * Este componente maneja la visualización de los productos y permite agregar
- * productos al carrito de compras.
- */
 interface Product {
   id: number;
   name: string;
@@ -38,7 +32,9 @@ export default class ProductsComponent implements OnInit {
     imageUrl: ''
   };
   isEditMode: boolean = false;
-  file!: File;
+  file: File | null = null;
+  loading: boolean = false;
+  successMessage: string = '';
   imagePreview: string | ArrayBuffer | null = null;
 
   private readonly storage = inject(Storage);
@@ -47,7 +43,7 @@ export default class ProductsComponent implements OnInit {
     console.log('ProductsComponent constructor called');
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     console.log('ProductsComponent ngOnInit called');
     this.loadProducts();
   }
@@ -68,6 +64,7 @@ export default class ProductsComponent implements OnInit {
   modificar(producto: Product): void {
     this.productForm = { ...producto };
     this.isEditMode = true;
+    this.imagePreview = producto.imageUrl;
   }
 
   eliminar(producto: Product): void {
@@ -75,7 +72,10 @@ export default class ProductsComponent implements OnInit {
     if (index !== -1) {
       this.products.splice(index, 1);
       this.productsService.MetodoProductos(this.products).subscribe(
-        response => console.log('Producto eliminado', response),
+        response => {
+          console.log('Producto eliminado', response);
+          this.loadProducts();
+        },
         error => console.error('Error al eliminar producto', error)
       );
     } else {
@@ -93,23 +93,24 @@ export default class ProductsComponent implements OnInit {
     if (input.files) {
       this.file = input.files[0];
       const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result as string | ArrayBuffer | null;
       };
       reader.readAsDataURL(this.file);
     }
   }
 
   submitForm(): void {
-    console.log('Form submitted');
+    this.loading = true;
     if (this.file) {
-      this.productsService.uploadImage(this.file).subscribe(
+      this.productsService.uploadImage(this.file).then(
         (downloadURL: string) => {
           this.productForm.imageUrl = downloadURL;
           this.saveProduct();
         },
         error => {
           console.error('Error uploading image:', error);
+          this.loading = false;
         }
       );
     } else {
@@ -127,9 +128,12 @@ export default class ProductsComponent implements OnInit {
             console.log('Producto modificado', response);
             this.isEditMode = false;
             this.resetForm();
+            this.showSuccessMessage('Producto modificado con éxito');
+            this.loadProducts(); // Reload products to reflect changes
           },
           error => {
             console.error('Error al modificar producto', error);
+            this.loading = false;
           }
         );
       }
@@ -146,9 +150,12 @@ export default class ProductsComponent implements OnInit {
         response => {
           console.log('Producto agregado', response);
           this.resetForm();
+          this.showSuccessMessage('Producto agregado con éxito');
+          this.loadProducts(); // Reload products to reflect changes
         },
         error => {
           console.error('Error al agregar producto', error);
+          this.loading = false;
         }
       );
     }
@@ -162,6 +169,15 @@ export default class ProductsComponent implements OnInit {
       price: null,
       imageUrl: ''
     };
+    this.file = null;
     this.imagePreview = null;
+    this.loading = false;
+  }
+
+  showSuccessMessage(message: string): void {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 3000);
   }
 }

@@ -1,68 +1,67 @@
 <div class="container mt-5">
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <h2>Lista de Productos</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Imagen</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let product of products">
-                        <td><img [src]="product.imageUrl" alt="{{ product.name }}" class="img-thumbnail"
-                            style="width: 50px;"></td>
-                        <td>{{ product.name }}</td>
-                        <td>{{ product.description }}</td>
-                        <td>{{ product.price }}</td>
+    <h2>Agregar Producto</h2>
+    <form (ngSubmit)="submitForm()" [ngClass]="{ 'loading': loading }">
+        <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="productForm.name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Descripción:</label>
+            <input type="text" class="form-control" id="description" [(ngModel)]="productForm.description"
+                name="description" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Precio:</label>
+            <input type="number" class="form-control" id="price" [(ngModel)]="productForm.price" name="price" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Subir Imagen:</label>
+            <input type="file" class="form-control-file" id="image" (change)="changeInput($event)">
+            <div *ngIf="imagePreview" class="mt-2">
+                <img [src]="imagePreview" alt="Vista previa de la imagen" class="img-thumbnail" width="200">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="loading">Guardar</button>
+    </form>
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
+        {{ successMessage }}
+    </div>
 
-                        <td>
-                            <button class="btn btn-warning btn-sm" (click)="modificar(product)">Modificar</button>
-                            <button class="btn btn-danger btn-sm" (click)="eliminar(product)">Eliminar</button>
-                            <button class="btn btn-success btn-sm" (click)="addProductToCart(product)">Agregar al
-                                Carrito</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="container mt-5">
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h2>Listado de Productos</h2>
+                <div *ngIf="products.length === 0" class="alert alert-info">
+                    No hay productos disponibles.
+                </div>
+                <table class="table table-striped" *ngIf="products.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of products">
+                            <td><img [src]="product.imageUrl" alt="{{ product.name }}" class="img-thumbnail"
+                                    style="width: 50px;"></td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.description }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" (click)="modificar(product)">Modificar</button>
+                                <button class="btn btn-danger btn-sm" (click)="eliminar(product)">Eliminar</button>
+                                <button class="btn btn-success btn-sm" (click)="addProductToCart(product)">Agregar al
+                                    Carrito</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-
-    <br><br>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Agregar Producto</h2>
-            <form (ngSubmit)="submitForm()">
-                <div class="form-group">
-                    <label for="name">Nombre:</label>
-                    <input type="text" class="form-control" id="name" [(ngModel)]="productForm.name" name="name"
-                        required>
-                </div>
-                <div class="form-group">
-                    <label for="description">Descripción:</label>
-                    <input type="text" class="form-control" id="description" [(ngModel)]="productForm.description"
-                        name="description" required>
-                </div>
-                <div class="form-group">
-                    <label for="price">Precio:</label>
-                    <input type="number" class="form-control" id="price" [(ngModel)]="productForm.price" name="price"
-                        required>
-                </div>
-                <div class="form-group">
-                    <label for="image">Subir Imagen</label>
-                    <input type="file" class="form-control-file" id="image" (change)="changeInput($event)">
-                </div>
-                <button type="submit" class="btn btn-primary">Guardar Producto</button>
-            </form>
-        </div>
-        <div class="col-md-6" *ngIf="imagePreview">
-            <h2>Previsualización de la Imagen</h2>
-            <img [src]="imagePreview" alt="Previsualización de la Imagen" class="img-thumbnail">
-        </div>
-    </div>
 </div>
