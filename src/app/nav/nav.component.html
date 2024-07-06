@@ -21,9 +21,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/about">Sobre Nosotros</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/products">Productos</a>
+
+                <li *ngIf="isAuthenticated; else notAuthenticated" class="nav-item dropdown" id="navAdmin">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarAdminDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Productos
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarAdminDropdown">
+                        <li><a class="dropdown-item" href="/products">Modificar Productos</a></li>
+                        <li><a class="dropdown-item" href="/all-products">Productos</a></li>
+                    </ul>
                 </li>
+                <ng-template #notAuthenticated>
+                    <li class="nav-item dropdown" id="navAdmin">
+                        <a class="nav-link" href="/products">Modificar Productos</a>
+                    </li>
+                </ng-template>
+
+
+
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contacto</a>
                 </li>
