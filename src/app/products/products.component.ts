@@ -1,12 +1,10 @@
-import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../services/cart.service';
 import { ProductsService } from '../services/products.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Storage, listAll, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
-import { Subscription, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Storage } from '@angular/fire/storage';
 
 /**
  * ProductsComponent
@@ -14,14 +12,6 @@ import { takeUntil } from 'rxjs/operators';
  * Este componente maneja la visualización de los productos y permite agregar
  * productos al carrito de compras.
  */
-// Interfaz que define la estructura de un producto
-
-type ImageStorage = {
-  name: string;
-  url: string;
-};
-
-
 interface Product {
   id: number;
   name: string;
@@ -36,12 +26,10 @@ interface Product {
   imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
-  providers: [ProductsService]  // Asegurarse de que el servicio esté disponible
+  providers: [ProductsService]
 })
-export default class ProductsComponent implements OnInit, OnDestroy {
-  // Arreglo para almacenar los productos
+export default class ProductsComponent implements OnInit {
   products: Product[] = [];
-  // Objeto para manejar el formulario de productos
   productForm: any = {
     id: null,
     name: '',
@@ -49,96 +37,103 @@ export default class ProductsComponent implements OnInit, OnDestroy {
     price: null,
     imageUrl: ''
   };
-  // Bandera para determinar si el modo de edición está activo
   isEditMode: boolean = false;
+  file!: File;
+  imagePreview: string | ArrayBuffer | null = null;
 
   private readonly storage = inject(Storage);
-  images = signal<ImageStorage[]>([]);
-  private destroy$ = new Subject<void>();
 
-  // Constructor que inyecta los servicios de carrito y productos
   constructor(private cartService: CartService, private productsService: ProductsService) {
     console.log('ProductsComponent constructor called');
   }
 
-  // Método de inicialización que carga los productos al iniciar el componente
   async ngOnInit(): Promise<void> {
-    const reference = ref(this.storage, 'products');
-    const images = await listAll(reference);
-
-    for (const image of images.items) {
-      const newImage = await getDownloadURL(image);
-      this.images.update((oldImages) => {
-        return [...oldImages, { name: image.name, url: newImage }];
-      
-      });
-    }
-
-    console.log(this.images());
-
-
-
     console.log('ProductsComponent ngOnInit called');
     this.loadProducts();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  // Método para cargar los productos desde el archivo JSON
   loadProducts(): void {
     console.log('loadProducts method called');
-    this.productsService.getProducts()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (data: Product[]) => {
-          console.log('Products loaded from JSON:', data);
-          this.products = data;
-        },
-        error => {
-          console.error('Error loading products from JSON:', error);
-        }
-      );
+    this.productsService.getProducts().subscribe(
+      (data: Product[]) => {
+        console.log('Products loaded from JSON:', data);
+        this.products = data;
+      },
+      error => {
+        console.error('Error loading products from JSON:', error);
+      }
+    );
   }
 
-  // Método para cargar los datos de un producto en el formulario y activar el modo de edición
   modificar(producto: Product): void {
     this.productForm = { ...producto };
     this.isEditMode = true;
   }
 
-  // Método para eliminar un producto de la lista y actualizar el archivo JSON
   eliminar(producto: Product): void {
     const index = this.products.findIndex((p: Product) => p.id === producto.id);
     if (index !== -1) {
       this.products.splice(index, 1);
-      this.productsService.MetodoProductos(this.products);
+      this.productsService.MetodoProductos(this.products).subscribe(
+        response => console.log('Producto eliminado', response),
+        error => console.error('Error al eliminar producto', error)
+      );
     } else {
       window.alert('Error al eliminar producto:');
     }
   }
 
-  // Método para agregar un producto al carrito
   addProductToCart(product: Product): void {
     this.cartService.addToCart(product);
     alert('Producto agregado al carrito');
   }
 
-  // Método para enviar el formulario, agrega o actualiza un producto en la lista y en el archivo JSON
+  changeInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(this.file);
+    }
+  }
+
   submitForm(): void {
     console.log('Form submitted');
+    if (this.file) {
+      this.productsService.uploadImage(this.file).subscribe(
+        (downloadURL: string) => {
+          this.productForm.imageUrl = downloadURL;
+          this.saveProduct();
+        },
+        error => {
+          console.error('Error uploading image:', error);
+        }
+      );
+    } else {
+      this.saveProduct();
+    }
+  }
+
+  saveProduct(): void {
     if (this.isEditMode) {
-      // Si está en modo de edición, actualiza el producto existente
       const index = this.products.findIndex((p: Product) => p.id === this.productForm.id);
       if (index !== -1) {
         this.products[index] = { ...this.productForm };
-        this.productsService.MetodoProductos(this.products);
-        this.isEditMode = false;
+        this.productsService.MetodoProductos(this.products).subscribe(
+          response => {
+            console.log('Producto modificado', response);
+            this.isEditMode = false;
+            this.resetForm();
+          },
+          error => {
+            console.error('Error al modificar producto', error);
+          }
+        );
       }
     } else {
-      // Si no está en modo de edición, agrega un nuevo producto
       const newProduct: Product = {
         id: this.products.length > 0 ? Math.max(...this.products.map(p => p.id)) + 1 : 1,
         name: this.productForm.name,
@@ -147,9 +142,19 @@ export default class ProductsComponent implements OnInit, OnDestroy {
         imageUrl: this.productForm.imageUrl
       };
       this.products.push(newProduct);
-      this.productsService.MetodoProductos(this.products);
+      this.productsService.MetodoProductos(this.products).subscribe(
+        response => {
+          console.log('Producto agregado', response);
+          this.resetForm();
+        },
+        error => {
+          console.error('Error al agregar producto', error);
+        }
+      );
     }
-    // Resetea el formulario
+  }
+
+  resetForm(): void {
     this.productForm = {
       id: null,
       name: '',
@@ -157,21 +162,6 @@ export default class ProductsComponent implements OnInit, OnDestroy {
       price: null,
       imageUrl: ''
     };
-  }
-
-  file!: File;
-
-  changeInput(event: Event): void {
-    console.log(this.storage);
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.file = input.files[0];
-      this.uploadFile();
-    }
-  }
-
-  uploadFile(): void {
-    const storageRef = ref(this.storage, `products/${this.file.name}`);
-    uploadBytesResumable(storageRef, this.file);
+    this.imagePreview = null;
   }
 }

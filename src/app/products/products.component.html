@@ -1,103 +1,68 @@
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-12">
+<div class="container mt-5">
+    <div class="row mt-5">
+        <div class="col-md-12">
             <h2>Lista de Productos</h2>
-            <hr>
-            <div *ngIf="products && products.length > 0; else noData">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Precio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let product of products">
-                            <td>{{ product.id }}</td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.description }}</td>
-                            <td>{{ product.price | number : '1.0-0' }}</td>
-                            <td>
-                                <button class="btn btn-primary" (click)="modificar(product)">Modificar</button>
-                                <button class="btn btn-danger" (click)="eliminar(product)">Eliminar</button>
-                                <button class="btn btn-success" (click)="addProductToCart(product)">Agregar al
-                                    Carrito</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <ng-template #noData>
-                <p>No hay datos disponibles</p>
-            </ng-template>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <td><img [src]="product.imageUrl" alt="{{ product.name }}" class="img-thumbnail"
+                            style="width: 50px;"></td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.price }}</td>
+
+                        <td>
+                            <button class="btn btn-warning btn-sm" (click)="modificar(product)">Modificar</button>
+                            <button class="btn btn-danger btn-sm" (click)="eliminar(product)">Eliminar</button>
+                            <button class="btn btn-success btn-sm" (click)="addProductToCart(product)">Agregar al
+                                Carrito</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-12">
-            <h3>{{ isEditMode ? 'Modificar Producto' : 'Agregar Producto' }}</h3>
+
+    <br><br>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Agregar Producto</h2>
             <form (ngSubmit)="submitForm()">
                 <div class="form-group">
                     <label for="name">Nombre:</label>
-                    <input type="text" id="name" [(ngModel)]="productForm.name" name="name" class="form-control"
+                    <input type="text" class="form-control" id="name" [(ngModel)]="productForm.name" name="name"
                         required>
                 </div>
                 <div class="form-group">
                     <label for="description">Descripción:</label>
-                    <input type="text" id="description" [(ngModel)]="productForm.description" name="description"
-                        class="form-control" required>
+                    <input type="text" class="form-control" id="description" [(ngModel)]="productForm.description"
+                        name="description" required>
                 </div>
                 <div class="form-group">
                     <label for="price">Precio:</label>
-                    <input type="number" id="price" [(ngModel)]="productForm.price" name="price" class="form-control"
+                    <input type="number" class="form-control" id="price" [(ngModel)]="productForm.price" name="price"
                         required>
                 </div>
-
-
                 <div class="form-group">
-                    <label for="imageUrl">URL de la Imagen:</label>
-                    <input type="text" id="imageUrl" [(ngModel)]="productForm.imageUrl" name="imageUrl"
-                        class="form-control" required>
+                    <label for="image">Subir Imagen</label>
+                    <input type="file" class="form-control-file" id="image" (change)="changeInput($event)">
                 </div>
-
-
-                <div class="container mt-4">
-                    <h2>Subir Imagen</h2>
-                    <div>
-                        <label class="btn btn-primary">
-                            <input type="file" accept="images/*" style="display: none;" (change)="changeInput($event)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                            </svg>
-                            Subir Imagen
-                        </label>
-                    </div>
-                </div>
-                <br>
-
-                <div>
-                    @for (image of images (); track image) {
-                    <div>
-                        <p>{{image.name}}</p>
-                        <picture>
-                            <img src="{{image.url}}" [alt]="image.name" loading="lazy" class="small-image">
-                        </picture>
-                    </div>
-                    }
-                </div>
-
-
-
-                <br><br><br>
-                <button type="submit" class="btn btn-primary mt-2">{{ isEditMode ? 'Modificar' : 'Agregar' }}</button>
+                <button type="submit" class="btn btn-primary">Guardar Producto</button>
             </form>
+        </div>
+        <div class="col-md-6" *ngIf="imagePreview">
+            <h2>Previsualización de la Imagen</h2>
+            <img [src]="imagePreview" alt="Previsualización de la Imagen" class="img-thumbnail">
         </div>
     </div>
 </div>
