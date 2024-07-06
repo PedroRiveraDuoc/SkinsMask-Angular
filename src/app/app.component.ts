@@ -18,5 +18,5 @@ import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
   ]
 })
 export class AppComponent {
-  title = 'SkinsMask';
+  title = 'skinsmask';
 }

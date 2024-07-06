@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../services/cart.service';
 import { ProductsService } from '../services/products.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { Storage, listAll, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { Subscription, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /**
  * ProductsComponent
@@ -28,7 +31,7 @@ interface Product {
   styleUrls: ['./products.component.scss'],
   providers: [ProductsService]  // Asegurarse de que el servicio esté disponible
 })
-export class ProductsComponent implements OnInit {
+export default class ProductsComponent implements OnInit, OnDestroy {
   // Arreglo para almacenar los productos
   products: Product[] = [];
   // Objeto para manejar el formulario de productos
@@ -42,29 +45,50 @@ export class ProductsComponent implements OnInit {
   // Bandera para determinar si el modo de edición está activo
   isEditMode: boolean = false;
 
+  private readonly storage = inject(Storage);
+  images = signal<any[]>([]);
+  private destroy$ = new Subject<void>();
+
   // Constructor que inyecta los servicios de carrito y productos
   constructor(private cartService: CartService, private productsService: ProductsService) {
     console.log('ProductsComponent constructor called');
   }
 
   // Método de inicialización que carga los productos al iniciar el componente
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const reference = ref(this.storage, 'products');
+    const images = await listAll(reference);
+
+    for (const image of images.items) {
+      const newImage = await getDownloadURL(image);
+      console.log({newImage});
+    }
+
+
+
     console.log('ProductsComponent ngOnInit called');
     this.loadProducts();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   // Método para cargar los productos desde el archivo JSON
   loadProducts(): void {
     console.log('loadProducts method called');
-    this.productsService.getProducts().subscribe(
-      (data: Product[]) => {
-        console.log('Products loaded from JSON:', data);
-        this.products = data;
-      },
-      error => {
-        console.error('Error loading products from JSON:', error);
-      }
-    );
+    this.productsService.getProducts()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (data: Product[]) => {
+          console.log('Products loaded from JSON:', data);
+          this.products = data;
+        },
+        error => {
+          console.error('Error loading products from JSON:', error);
+        }
+      );
   }
 
   // Método para cargar los datos de un producto en el formulario y activar el modo de edición
@@ -84,13 +108,11 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-
   // Método para agregar un producto al carrito
   addProductToCart(product: Product): void {
     this.cartService.addToCart(product);
     alert('Producto agregado al carrito');
   }
-
 
   // Método para enviar el formulario, agrega o actualiza un producto en la lista y en el archivo JSON
   submitForm(): void {
@@ -126,13 +148,18 @@ export class ProductsComponent implements OnInit {
   }
 
   file!: File;
-  changeInput(event: Event): void{
+
+  changeInput(event: Event): void {
+    console.log(this.storage);
     const input = event.target as HTMLInputElement;
     if (input.files) {
       this.file = input.files[0];
+      this.uploadFile();
     }
-    
   }
 
-
+  uploadFile(): void {
+    const storageRef = ref(this.storage, `products/${this.file.name}`);
+    uploadBytesResumable(storageRef, this.file);
+  }
 }

@@ -16,11 +16,11 @@ export class ProductsService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer 39ad5402-8865-43a9-b5ac-f151db8a3394'
+      'Authorization': 'Bearer fa3f16dd-5dbb-4d1d-8331-f36e395ef278'
     })
   };
   // URL del archivo JSON en Firebase
-  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/skinsmask-baa17.appspot.com/o/products.json?alt=media&token=39ad5402-8865-43a9-b5ac-f151db8a3394'; // URL archivo JSON Firebase
+  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/skinsmask-9d73a.appspot.com/o/products.json?alt=media&token=fa3f16dd-5dbb-4d1d-8331-f36e395ef278'; // URL archivo JSON Firebase
 
   // Variable para almacenar la lista de productos
   private lista: any;
