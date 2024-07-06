@@ -23,7 +23,8 @@
                             <td>
                                 <button class="btn btn-primary" (click)="modificar(product)">Modificar</button>
                                 <button class="btn btn-danger" (click)="eliminar(product)">Eliminar</button>
-                                <button class="btn btn-success" (click)="addProductToCart(product)">Agregar al Carrito</button>
+                                <button class="btn btn-success" (click)="addProductToCart(product)">Agregar al
+                                    Carrito</button>
                             </td>
                         </tr>
                     </tbody>
@@ -41,21 +42,25 @@
             <form (ngSubmit)="submitForm()">
                 <div class="form-group">
                     <label for="name">Nombre:</label>
-                    <input type="text" id="name" [(ngModel)]="productForm.name" name="name" class="form-control" required>
+                    <input type="text" id="name" [(ngModel)]="productForm.name" name="name" class="form-control"
+                        required>
                 </div>
                 <div class="form-group">
                     <label for="description">Descripción:</label>
-                    <input type="text" id="description" [(ngModel)]="productForm.description" name="description" class="form-control" required>
+                    <input type="text" id="description" [(ngModel)]="productForm.description" name="description"
+                        class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="price">Precio:</label>
-                    <input type="number" id="price" [(ngModel)]="productForm.price" name="price" class="form-control" required>
+                    <input type="number" id="price" [(ngModel)]="productForm.price" name="price" class="form-control"
+                        required>
                 </div>
 
 
                 <div class="form-group">
                     <label for="imageUrl">URL de la Imagen:</label>
-                    <input type="text" id="imageUrl" [(ngModel)]="productForm.imageUrl" name="imageUrl" class="form-control" required>
+                    <input type="text" id="imageUrl" [(ngModel)]="productForm.imageUrl" name="imageUrl"
+                        class="form-control" required>
                 </div>
 
 
@@ -64,12 +69,31 @@
                     <div>
                         <label class="btn btn-primary">
                             <input type="file" accept="images/*" style="display: none;" (change)="changeInput($event)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-file">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                            </svg>
                             Subir Imagen
                         </label>
                     </div>
                 </div>
-                
+                <br>
+
+                <div>
+                    @for (image of images (); track image) {
+                    <div>
+                        <p>{{image.name}}</p>
+                        <picture>
+                            <img src="{{image.url}}" [alt]="image.name" loading="lazy" class="small-image">
+                        </picture>
+                    </div>
+                    }
+                </div>
+
+
 
                 <br><br><br>
                 <button type="submit" class="btn btn-primary mt-2">{{ isEditMode ? 'Modificar' : 'Agregar' }}</button>

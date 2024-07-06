@@ -15,6 +15,13 @@ import { takeUntil } from 'rxjs/operators';
  * productos al carrito de compras.
  */
 // Interfaz que define la estructura de un producto
+
+type ImageStorage = {
+  name: string;
+  url: string;
+};
+
+
 interface Product {
   id: number;
   name: string;
@@ -46,7 +53,7 @@ export default class ProductsComponent implements OnInit, OnDestroy {
   isEditMode: boolean = false;
 
   private readonly storage = inject(Storage);
-  images = signal<any[]>([]);
+  images = signal<ImageStorage[]>([]);
   private destroy$ = new Subject<void>();
 
   // Constructor que inyecta los servicios de carrito y productos
@@ -61,8 +68,13 @@ export default class ProductsComponent implements OnInit, OnDestroy {
 
     for (const image of images.items) {
       const newImage = await getDownloadURL(image);
-      console.log({newImage});
+      this.images.update((oldImages) => {
+        return [...oldImages, { name: image.name, url: newImage }];
+      
+      });
     }
+
+    console.log(this.images());
 
 
 

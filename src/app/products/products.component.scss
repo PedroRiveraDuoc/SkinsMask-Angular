@@ -2,7 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 160vh;
+    min-height: 200vh;
+    
 }
 
 .container {
@@ -60,4 +61,15 @@
     .mt-5 {
         margin-top: 3rem;
     }
+}
+
+
+/* Clase para hacer que las imágenes se vean pequeñas */
+.small-image {
+    width: 100px;
+    /* Ancho deseado */
+    height: auto;
+    /* Mantiene la proporción de la imagen */
+    object-fit: cover;
+    /* Asegura que la imagen cubra el área asignada sin distorsión */
 }
