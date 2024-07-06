@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 110vh;
+    min-height: 120vh;
 }
 
 .contact-container {
@@ -29,4 +29,15 @@ h2 {
 .btn-primary:hover {
     background-color: #0056b3;
     border-color: #004085;
+}
+.section-title {
+    background-color: #313131;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 2rem;
+
 }

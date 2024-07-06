@@ -73,3 +73,15 @@
     object-fit: cover;
     /* Asegura que la imagen cubra el área asignada sin distorsión */
 }
+
+.section-title {
+    background-color: #313131;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 2rem;
+
+}

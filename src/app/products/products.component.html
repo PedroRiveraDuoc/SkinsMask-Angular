@@ -1,5 +1,9 @@
 <div class="container mt-5">
-    <h2>Agregar Producto</h2>
+    <br>
+    <div class="text-center">
+        <h2 class="section-title mb-4">+ Agregar Producto 🏯</h2>
+    </div>
+    <br>
     <form (ngSubmit)="submitForm()" [ngClass]="{ 'loading': loading }">
         <div class="form-group">
             <label for="name">Nombre:</label>
@@ -30,7 +34,10 @@
     <div class="container mt-5">
         <div class="row mt-5">
             <div class="col-md-12">
-                <h2>Listado de Productos</h2>
+                <div class="text-center">
+                    <h2 class="section-title mb-4">Listado de Productos&nbsp; 👺</h2>
+                </div>
+                <br>
                 <div *ngIf="products.length === 0" class="alert alert-info">
                     No hay productos disponibles.
                 </div>
@@ -54,9 +61,9 @@
                             <td>
                                 <button class="btn btn-warning btn-sm" (click)="modificar(product)">Modificar</button>
                                 <button class="btn btn-danger btn-sm" (click)="eliminar(product)">Eliminar</button>
-                                <button class="btn btn-success btn-sm" (click)="addProductToCart(product)">Agregar al
-                                    Carrito</button>
+                                
                             </td>
+                            
                         </tr>
                     </tbody>
                 </table>
