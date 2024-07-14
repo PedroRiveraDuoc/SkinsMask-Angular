@@ -44,6 +44,9 @@ export class ForgotPasswordComponent implements OnInit {
           if (result) {
             alert('Se ha enviado un enlace de recuperación a su correo.');
           }
+          else {
+            alert('No se encontró una cuenta con el correo proporcionado.');
+          }
         },
         error: (err) => {
           console.error('Error sending password reset link:', err);
