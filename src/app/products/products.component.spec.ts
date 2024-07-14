@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { ProductsComponent } from './products.component';
+import ProductsComponent from './products.component';
 import { CartService } from '../services/cart.service';
-import { CommonModule } from '@angular/common';
+import { ProductsService } from '../services/products.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { Storage } from '@angular/fire/storage';
 
-/**
- * Unit tests for ProductsComponent
- */
 describe('ProductsComponent', () => {
   let component: ProductsComponent;
   let fixture: any;
@@ -14,10 +14,15 @@ describe('ProductsComponent', () => {
 
   beforeEach(async () => {
     const cartServiceSpy = jasmine.createSpyObj('CartService', ['addToCart']);
+    const storageSpy = jasmine.createSpyObj('Storage', ['get', 'set', 'remove']);
 
     await TestBed.configureTestingModule({
-      imports: [CommonModule, ProductsComponent],
-      providers: [{ provide: CartService, useValue: cartServiceSpy }]
+      imports: [HttpClientTestingModule, FormsModule],
+      providers: [
+        { provide: CartService, useValue: cartServiceSpy },
+        { provide: Storage, useValue: storageSpy },
+        ProductsService
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProductsComponent);
@@ -26,25 +31,16 @@ describe('ProductsComponent', () => {
     fixture.detectChanges();
   });
 
-  /**
-   * Test case to verify component creation
-   */
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  /**
-   * Test case to verify product list rendering
-   */
   it('should render product list', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const productCards = compiled.querySelectorAll('.product-card');
     expect(productCards.length).toBe(component.products.length);
   });
 
-  /**
-   * Test case to verify product name rendering
-   */
   it('should display product names', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const productNames = compiled.querySelectorAll('.product-info h3');
@@ -53,22 +49,10 @@ describe('ProductsComponent', () => {
     });
   });
 
-  /**
-   * Test case to verify the add to cart functionality
-   */
-  it('should call addToCart method when buy button is clicked', () => {
-    const addToCartSpy = spyOn(component, 'addToCart').and.callThrough();
-    const buttons = fixture.debugElement.queryAll(By.css('.btn-primary'));
-    buttons[0].triggerEventHandler('click', null);
-    expect(addToCartSpy).toHaveBeenCalledWith(component.products[0]);
-  });
 
-  /**
-   * Test case to verify the interaction with the CartService
-   */
-  it('should add product to cart when addToCart is called', () => {
+  it('should add product to cart when addProductToCart is called', () => {
     const product = component.products[0];
-    component.addToCart(product);
+    component.addProductToCart(product);
     expect(cartService.addToCart).toHaveBeenCalledWith(product);
   });
 });

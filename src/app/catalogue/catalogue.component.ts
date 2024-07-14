@@ -49,4 +49,10 @@ export class CatalogueComponent implements OnInit {
   formatPrice(price: number): string {
     return `$${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`;
   }
+
+  trackByFn(index: number, product: Product): number {
+    return product.id;
+  }
 }
+
+

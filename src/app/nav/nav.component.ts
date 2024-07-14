@@ -17,6 +17,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent implements OnInit, OnDestroy {
+  title(title: any) {
+    throw new Error('Method not implemented.');
+  }
   isAuthenticated: boolean = false;
   username: string | null = null;
   private subscription: Subscription | null = null;
